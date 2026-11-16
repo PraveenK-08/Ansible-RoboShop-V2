@@ -1,5 +1,5 @@
 - name: importing app_setup role
-  incldue_role:
+  include_role:
     name: common
     tasks_from: app_setup
 
