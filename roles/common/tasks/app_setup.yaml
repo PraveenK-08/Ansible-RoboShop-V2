@@ -1,0 +1,35 @@
+- name: remove existing app directory
+  file: 
+   path: /app
+   state: absent  
+
+- name: creating app directory
+  file:
+    path: /app
+    state: directory
+ 
+- name: creating system user
+  user:
+   name: roboshop
+   create_home: false
+   state: present
+   shell: /sbin/nologin
+   home: /app
+   system: true
+   comment: roboshop system user
+ 
+- name:  remove existing {{ component }}.zip
+  file: 
+    path: /tmp/{{ component }}.zip
+    state: absent
+
+- name: downloading {{ component }} zip file
+  get_url:
+   url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/{{ component }}-v4.zip
+   dest: /tmp/{{ component }}.zip
+
+- name: extract or unzip the file
+  unarchive:
+   src: /tmp/{{ component }}.zip
+   dest: /app
+   remote_src: yes
