@@ -1,0 +1,12 @@
+- name: installing python
+  dnf:
+    name:
+      - python3.14
+      - python3.14-pip
+    state: present
+
+- name: installing  dependencies
+  ansible.builtin.pip:
+    requirements: /app/requirements.txt
+    virtualenv: /app/.venv
+    virtualenv_command: python3.14 -m ven
