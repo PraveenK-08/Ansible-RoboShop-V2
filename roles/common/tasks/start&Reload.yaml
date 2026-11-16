@@ -1,0 +1,9 @@
+    - name: reloading the server
+      systemd_service:
+       daemon_reload: true
+
+    - name: start and enable the service
+      service:
+       name: "{{ component }}"
+       state: restarted
+       enabled: true  

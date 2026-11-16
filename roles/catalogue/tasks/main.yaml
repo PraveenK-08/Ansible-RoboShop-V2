@@ -31,12 +31,7 @@
   shell: mongosh --host mongodb.teram.store </app/db/master-data.js
   when: availableDataCount.stdout | int == 0
 
-- name: reloading the server
-  systemd_service:
-    daemon_reload: true
-
-- name: start and enable the service
-  service:
-    name: catalogue
-    state: restarted
-    enabled: true
+- name: importing start&Reload role
+  include_role:
+    name: common
+    tasks_from: start&Reload
