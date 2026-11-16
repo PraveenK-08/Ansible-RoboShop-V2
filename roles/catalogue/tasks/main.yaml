@@ -1,30 +1,30 @@
-- name: importing app-setup role  
+- name: importing app-setup role
   include_role:
     name: common
     tasks_from: app_setup
 
-- name: importing nodejs role  
+- name: importing nodejs role
   include_role:
     name: common
     tasks_from: nodejs
 
-- name: importing service-setup role  
+- name: importing service-setup role
   include_role:
     name: common
-    tasks_from: service_setup        
+    tasks_from: service_setup
 
 - name: creating repo file for mongodb client installtion
   copy:
-   src: mongodb.repo
-   dest: /etc/yum.repos.d/mongodb.repo
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongodb.repo
 
 - name: installing mongodb client to load data
   dnf:
     name: mongodb-mongosh
     state: present
- 
+
 - name: check whether the data is loaded or not
-  command: mongosh --host mongodb.teram.store --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()'  
+  command: mongosh --host mongodb.teram.store --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()'
   register: availableDataCount
 
 - name: loading the data
@@ -33,10 +33,10 @@
 
 - name: reloading the server
   systemd_service:
-   daemon_reload: true
+    daemon_reload: true
 
 - name: start and enable the service
   service:
-   name: catalogue
-   state: restarted
-   enabled: true     
+    name: catalogue
+    state: restarted
+    enabled: true
