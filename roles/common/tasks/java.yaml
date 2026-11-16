@@ -1,0 +1,21 @@
+- name: enable maven 3.9 version
+  command: dnf module enable maven:3.9 -y
+
+- name: installing  maven and JDK
+  package:
+    name: 
+    - maven
+    - java-25-openjdk-devel
+    - maven-openjdk25
+    - mysql
+    state: present
+
+- name: Downloading and installing dependencies
+  command: mvn clean package
+  args:
+    chdir: /app
+
+- name: moving the shipping.jar file
+  command: mv target/shipping.jar shipping.jar
+  args:
+    chdir: /app   

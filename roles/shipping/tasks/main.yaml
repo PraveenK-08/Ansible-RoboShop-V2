@@ -1,0 +1,33 @@
+- name: importing app_setup role
+  incldue_role:
+    name: common
+    task_from: app_setup
+
+- name: importing java role
+  include_role: 
+    name: common
+    tasks_from: java
+
+
+- name: check whether the cities loaded or not
+  command: mysql -h mysql.teram.store -u root -p{{ mysql_password }} -N -B -e "SELECT COUNT(*) FROM cities.cities;"   
+  register: cities_count
+  ignore_errors: true
+
+- name: loading the cities
+  shell: mysql -h mysql.teram.store -uroot -p{{ mysql_password }} < /app/db/master-data.sql                   
+  when:  cities_count.rc!=0 or cities_count.stdout | int == 0
+
+- name: create app user for mysql
+  shell: mysql -h mysql.teram.store -uroot -p{{ mysql_password }} < /app/db/app-user.sql  
+
+- name: importing service_setup role
+  include_role: 
+    name: common
+    tasks_from: service_setup
+
+- name: importing restart role
+  include_role: 
+    name: common
+    tasks_from: start&Reload
+
