@@ -36,7 +36,7 @@
    remote_src: yes
 
 - name: creating service file
-  copy:
+  template:
    src: frontend.service.j2
    dest: /etc/nginx/default.d/roboshop.conf
   notify: Restart Nginx 
