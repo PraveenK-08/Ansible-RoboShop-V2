@@ -1,0 +1,37 @@
+- name: delete instance for databases
+  hosts: localhost
+  connection: local
+  vars:
+    instance:
+      - mongodb
+      - redis
+      - mysql
+      - rabbitmq
+      - catalogue
+      - user
+      - cart
+      - shipping
+      - payment
+      - dispatch
+      - frontend
+    ami_id: ami-0055977a6e828a4f4
+
+  tasks:
+   - name: delete EC2 instances
+     amazon.aws.ec2_instance:
+       name: "roboshop-{{ item }}"
+       state: absent
+       region: "us-east-1"
+       wait: false
+     loop: "{{ instance }}"
+
+   - name: delete R53 records for database instances
+     amazon.aws.route53:
+       state: absent
+       zone: "teram.store"
+       record: "{{ item }}.teram.store"
+       type: A
+       ttl: 1
+     loop: "{{ instance}}"
+
+     
