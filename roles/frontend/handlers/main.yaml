@@ -1,6 +1,5 @@
-handlers:
-  - name: Restart Nginx
-    service: 
+- name: Restart Nginx
+  service: 
       name: nginx
       state: restarted
       enabled: true
