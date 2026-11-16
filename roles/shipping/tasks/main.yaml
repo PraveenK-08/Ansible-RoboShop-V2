@@ -1,7 +1,7 @@
 - name: importing app_setup role
   incldue_role:
     name: common
-    task_from: app_setup
+    tasks_from: app_setup
 
 - name: importing java role
   include_role: 
