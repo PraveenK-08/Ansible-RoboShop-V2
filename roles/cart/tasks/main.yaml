@@ -1,0 +1,19 @@
+- name: importing app-setup role
+  include_role:
+    name: common
+    tasks_from: app_setup
+
+- name: importing nodejs role
+  include_role:
+    name: common
+    tasks_from: nodejs
+
+- name: importing service_setup role
+  include_role:
+    name: common
+    tasks_from: service_setup   
+
+- name: importing start&Reload role
+  include_role:
+    name: common
+    tasks_from: start&Reload
