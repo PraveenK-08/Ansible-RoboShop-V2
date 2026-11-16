@@ -1,0 +1,21 @@
+- name: enable redis 7 version
+  command: dnf module enable redis:7 -y
+- name: install redis
+  package:
+    name: redis
+    state: present
+- name: Edit bindIp in redis config file
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: "^bind"
+    line: "bind 0.0.0.0"
+- name: Edit protected-mode in redis config file
+  replace:
+    path: /etc/redis/redis.conf
+    regexp: "^protected-mode yes"
+    replace: "protected-mode no"
+- name: start redis service
+  service:
+    name: redis
+    state: restarted
+    enabled: true
