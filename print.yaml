@@ -1,0 +1,7 @@
+- name: printing user name and password
+  hosts: localhost
+  connection: local
+  tasks:
+   - name: 
+     debug:
+      msg: "{{ ansible_user }}"
