@@ -3,6 +3,6 @@ region: us-east-1
 filters:
   instance-state-name: running
 
-hostname: Ip address
+hostname: public_ip_address
 compose:
  ansible_host: public_ip_address
