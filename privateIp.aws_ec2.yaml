@@ -5,5 +5,3 @@ filters:
 
 hostnames: 
  - public_ip_address
-compose:
- ansible_host: public_ip_address
